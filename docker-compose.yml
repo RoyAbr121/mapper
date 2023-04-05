@@ -1,15 +1,15 @@
-version: '3.8'
+version: '3.9'
 services:
   db:
-    image: postgis/postgis:15-3.3
+    image: postgis/postgis:latest
+    container_name: mapper-postgis
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgis
+      - POSTGRES_PASSWORD=postgis
     ports:
-      - '5432:5432'
-    volumes:
-      - db:/var/lib/postgresql/data
-volumes:
-  db:
-    driver: local
+      - "5432:5432"
+
+# Docker commands:
+# docker run --name mapper-postgres -e POSTGRES_USER=postgis -e POSTGRES_PASSWORD=postgis -p 5432:5432 -d postgis/postgis:latest
+# docker exec -ti some-postgis psql -U postgis
