@@ -4,7 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="field")
+@Table(name = "field")
 public class Field {
 
     @Id
@@ -13,7 +13,15 @@ public class Field {
     @NotNull
     private double latitude;
     @NotNull
-    private double longtitude;
+    private double longitude;
+
+    public Field() {
+    }
+
+    public Field(double latitude, double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
 
     public long getId() {
         return id;
@@ -31,19 +39,18 @@ public class Field {
         this.latitude = latitude;
     }
 
-    public double getLongtitude() {
-        return longtitude;
+    public double getLongitude() {
+        return longitude;
     }
 
-    public void setLongtitude(double longtitude) {
-        this.longtitude = longtitude;
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
-
 
     public static final class FieldBuilder {
         private long id;
         private @NotNull double latitude;
-        private @NotNull double longtitude;
+        private @NotNull double longitude;
 
         private FieldBuilder() {
         }
@@ -62,8 +69,8 @@ public class Field {
             return this;
         }
 
-        public FieldBuilder longtitude(double longtitude) {
-            this.longtitude = longtitude;
+        public FieldBuilder longitude(double longitude) {
+            this.longitude = longitude;
             return this;
         }
 
@@ -71,7 +78,7 @@ public class Field {
             Field field = new Field();
             field.setId(id);
             field.setLatitude(latitude);
-            field.setLongtitude(longtitude);
+            field.setLongitude(longitude);
             return field;
         }
     }

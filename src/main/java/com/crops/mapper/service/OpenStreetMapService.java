@@ -1,9 +1,11 @@
 package com.crops.mapper.service;
 
+import com.crops.mapper.model.Field;
 import okhttp3.*;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,22 +14,26 @@ public class OpenStreetMapService {
 
     public static final Pattern WHEAT_PATTERN = Pattern.compile("<li class=\"list-group-item search_results_entry\">Farmland.*data-lat=\"(.*)\" data-lon=\"(.*)\" data-min-lat=.*data-prefix=\"Farmland\"");
 
-    public String searchWheat() throws IOException {
-        return parseWheatHtml(getWheatHtml());
+    // TODO: should the function return ArrayList<Field> or ArrayList<FieldIn>?
+    public ArrayList<Field> searchFields() throws IOException {
+        return parseFieldHtml(getFieldHtml());
     }
 
-    public String parseWheatHtml(String html) {
-        String res = "";
+    public ArrayList<Field> parseFieldHtml(String html) {
+        ArrayList<Field> result = new ArrayList<Field>();
         Matcher matcher = WHEAT_PATTERN.matcher(html);
 
         while (matcher.find()) {
-            res += "Latitude = " + matcher.group(1) + ", Longtitude = " + matcher.group(2) + "\n";
+            Double latitude = Double.valueOf(matcher.group(1));
+            Double longitude = Double.valueOf(matcher.group(2));
+            Field field = new Field(latitude, longitude);
+            result.add(field);
         }
 
-        return res;
+        return result;
     }
 
-    public String getWheatHtml() throws IOException {
+    public String getFieldHtml() throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded; charset=UTF-8");
         RequestBody body = RequestBody.create(mediaType, "zoom=19&minlon=79.63113248348236&minlat=18.0182907365402&maxlon=79.63418751955034&maxlat=18.021448434767805&authenticity_token=90CmVft1wPhIOlF1DaAspMNAlSUdYUNn_dQ7EPWIrYN0RH2sU7eggdfTIS7PCTQaHa_kTe3qlpPxDlz5e8G5kw");
@@ -55,6 +61,5 @@ public class OpenStreetMapService {
         Response response = client.newCall(request).execute();
         return response.body().string();
     }
-
 
 }
