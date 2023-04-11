@@ -23,8 +23,7 @@ public class FieldsController {
     @Autowired
     FieldService fieldService;
 
-    // TODO: decide weather there should be a separate call just for scarping and a separate one to insert to DB
-    @RequestMapping(value = "/scrape", method = RequestMethod.POST)
+    @RequestMapping(value = "/scrape", method = RequestMethod.GET)
     public ResponseEntity<?> scrapeWheatFields() throws IOException {
         ArrayList<Field> fields = openStreetMapService.searchFields();
         if (fields.isEmpty()) throw new RuntimeException("Not Fields were found during the scraping");
@@ -42,7 +41,6 @@ public class FieldsController {
         return new ResponseEntity<>(fieldService.findById(id), HttpStatus.OK);
     }
 
-    // TODO: make sure to understand the relationship between Field and FieldIn which does what
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<?> insertField(@RequestBody FieldIn fieldIn) {
         Field field = fieldIn.toField();

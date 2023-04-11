@@ -12,23 +12,23 @@ import java.util.regex.Pattern;
 @Service
 public class OpenStreetMapService {
 
-    public static final Pattern WHEAT_PATTERN = Pattern.compile("<li class=\"list-group-item search_results_entry\">Farmland.*data-lat=\"(.*)\" data-lon=\"(.*)\" data-min-lat=.*data-prefix=\"Farmland\"");
+    public static final Pattern PATTERN_FOR_WHEAT_FIELD_SEARCH = Pattern.compile("<li class=\"list-group-item search_results_entry\">Farmland.*data-lat=\"(.*)\" data-lon=\"(.*)\" data-min-lat=.*data-prefix=\"Farmland\"");
 
-    // TODO: should the function return ArrayList<Field> or ArrayList<FieldIn>?
     public ArrayList<Field> searchFields() throws IOException {
         return parseFieldHtml(getFieldHtml());
     }
 
     public ArrayList<Field> parseFieldHtml(String html) {
         ArrayList<Field> result = new ArrayList<Field>();
-        Matcher matcher = WHEAT_PATTERN.matcher(html);
+        Matcher matcher = PATTERN_FOR_WHEAT_FIELD_SEARCH.matcher(html);
 
-        while (matcher.find()) {
-            Double latitude = Double.valueOf(matcher.group(1));
-            Double longitude = Double.valueOf(matcher.group(2));
-            Field field = new Field(latitude, longitude);
-            result.add(field);
-        }
+
+//        while (matcher.find()) {
+//            Double latitude = Double.valueOf(matcher.group(1));
+//            Double longitude = Double.valueOf(matcher.group(2));
+//            Field field = new Field(latitude, longitude);
+//            result.add(field);
+//        }
 
         return result;
     }

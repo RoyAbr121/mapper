@@ -1,34 +1,26 @@
 package com.crops.mapper.model;
 
+import org.springframework.data.geo.Polygon;
+
 import static com.crops.mapper.model.Field.FieldBuilder.aField;
 
 public class FieldIn {
 
-    private double latitude;
-    private double longitude;
+    private Polygon polygon;
 
-    public double getLatitude() {
-        return latitude;
+    public Polygon getPolygon() {
+        return polygon;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setPolygon(Polygon polygon) {
+        this.polygon = polygon;
     }
 
     public Field toField() {
-        return aField().latitude(latitude).longitude(longitude).build();
+        return aField().polygon(polygon).build();
     }
 
     public void updateField(Field field) {
-        field.setLatitude(latitude);
-        field.setLongitude(longitude);
+        field.setPolygon(polygon);
     }
 }
