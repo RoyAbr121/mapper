@@ -25,7 +25,7 @@ public class FieldsController {
 
     @RequestMapping(value = "/scrape", method = RequestMethod.GET)
     public ResponseEntity<?> scrapeWheatFields() throws IOException {
-        ArrayList<Field> fields = openStreetMapService.searchFields();
+        ArrayList<Field> fields = openStreetMapService.scrapeWheatFields();
         if (fields.isEmpty()) throw new RuntimeException("Not Fields were found during the scraping");
         fieldService.saveAll(fields);
         return new ResponseEntity<>(fields, HttpStatus.OK);

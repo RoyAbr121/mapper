@@ -18,6 +18,14 @@ public class Field {
     public Field() {
     }
 
+    public Field(Polygon polygon) {
+        this.polygon = polygon;
+    }
+
+    public Field(List<Point> points) {
+        this.polygon = new Polygon(points);
+    }
+
     public Field(long id, List<Point> points) {
         this.id = id;
         this.polygon = new Polygon(points);
@@ -38,7 +46,6 @@ public class Field {
     public void setPolygon(Polygon polygon) {
         this.polygon = polygon;
     }
-
 
     public static final class FieldBuilder {
         private long id;
