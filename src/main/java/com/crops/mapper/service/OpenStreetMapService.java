@@ -43,7 +43,7 @@ public class OpenStreetMapService {
         while (matcher.find()) {
             Double latitude = Double.parseDouble(matcher.group(1));
             Double longitude = Double.parseDouble(matcher.group(2));
-            point = new Point(latitude, longitude);
+            point = new Point(longitude, latitude); // TODO: see if this is in fact the order to store latitude and longitude
         }
 
         return point;

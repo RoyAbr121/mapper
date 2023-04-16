@@ -6,6 +6,10 @@ import org.springframework.data.geo.Polygon;
 import javax.persistence.*;
 import java.util.List;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
+
 @Entity
 @Table(name = "field")
 public class Field {
@@ -45,6 +49,26 @@ public class Field {
 
     public void setPolygon(Polygon polygon) {
         this.polygon = polygon;
+    }
+
+    public String toGeoJson() {
+        String points = polygon.getPoints().toString().replace("Point ", "").replace("x=", "").replace("y=", "").replace(" ", "");
+        return "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[" + points + "]}}]}";
+    }
+
+    public String toEncodedUrlQuery() {
+        String baseUrl = "http://geojson.io/#data=data:application/json,";
+        String query = this.toGeoJson();
+        String encodedQuery = encodeValue(query);
+        return baseUrl + encodedQuery;
+    }
+
+    private static String encodeValue(String value) {
+        try {
+            return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex.getCause());
+        }
     }
 
     public static final class FieldBuilder {

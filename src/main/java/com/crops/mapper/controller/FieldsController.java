@@ -38,6 +38,8 @@ public class FieldsController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getField(@PathVariable Long id) {
+        Optional<Field> field = fieldService.findById(id);
+        System.out.println(field.get().toEncodedUrlQuery());
         return new ResponseEntity<>(fieldService.findById(id), HttpStatus.OK);
     }
 
