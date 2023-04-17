@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -65,5 +66,14 @@ public class FieldsController {
         if (dbField.isEmpty()) throw new RuntimeException("Field with the ID: " + id + " was not found");
         fieldService.delete(dbField.get());
         return new ResponseEntity<>("DELETED", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/present/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Void> presentField(@PathVariable Long id) {
+        Optional<Field> dbField = fieldService.findById(id);
+        if (dbField.isEmpty()) throw new RuntimeException("Field with the ID: " + id + " was not found");
+        String encodedUrl = dbField.get().toEncodedUrlQuery();
+
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(encodedUrl)).build();
     }
 }
