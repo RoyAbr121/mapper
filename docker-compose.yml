@@ -1,12 +1,12 @@
 version: '3.9'
 services:
   db:
-    image: postgis/postgis:latest
-    container_name: mapper-postgis
+    image: postgres:latest
+    container_name: mapper-postgres
     restart: always
     environment:
-      - POSTGRES_USER=postgis
-      - POSTGRES_PASSWORD=postgis
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
       - "5432:5432"
 
