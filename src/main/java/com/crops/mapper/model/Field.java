@@ -5,7 +5,6 @@ import org.springframework.data.geo.Polygon;
 
 import javax.persistence.*;
 import java.util.List;
-
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.io.UnsupportedEncodingException;
