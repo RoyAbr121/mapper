@@ -1,7 +1,6 @@
 package com.crops.mapper.repo;
 
 import com.crops.mapper.model.Field;
-import com.crops.mapper.model.FieldIn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

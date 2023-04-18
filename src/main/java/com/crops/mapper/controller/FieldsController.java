@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -23,10 +24,9 @@ public class FieldsController {
     @Autowired
     FieldService fieldService;
 
-    // TODO: decide weather there should be a separate call just for scarping and a separate one to insert to DB
-    @RequestMapping(value = "/scrape", method = RequestMethod.POST)
+    @RequestMapping(value = "/scrape", method = RequestMethod.GET)
     public ResponseEntity<?> scrapeWheatFields() throws IOException {
-        ArrayList<Field> fields = openStreetMapService.searchFields();
+        ArrayList<Field> fields = openStreetMapService.scrapeWheatFields();
         if (fields.isEmpty()) throw new RuntimeException("Not Fields were found during the scraping");
         fieldService.saveAll(fields);
         return new ResponseEntity<>(fields, HttpStatus.OK);
@@ -39,10 +39,11 @@ public class FieldsController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getField(@PathVariable Long id) {
+        Optional<Field> field = fieldService.findById(id);
+        System.out.println(field.get().toEncodedUrlQuery());
         return new ResponseEntity<>(fieldService.findById(id), HttpStatus.OK);
     }
 
-    // TODO: make sure to understand the relationship between Field and FieldIn which does what
     @RequestMapping(value = "", method = RequestMethod.POST)
     public ResponseEntity<?> insertField(@RequestBody FieldIn fieldIn) {
         Field field = fieldIn.toField();
@@ -65,5 +66,14 @@ public class FieldsController {
         if (dbField.isEmpty()) throw new RuntimeException("Field with the ID: " + id + " was not found");
         fieldService.delete(dbField.get());
         return new ResponseEntity<>("DELETED", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/present/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Void> presentField(@PathVariable Long id) {
+        Optional<Field> dbField = fieldService.findById(id);
+        if (dbField.isEmpty()) throw new RuntimeException("Field with the ID: " + id + " was not found");
+        String encodedUrl = dbField.get().toEncodedUrlQuery();
+
+        return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(encodedUrl)).build();
     }
 }
