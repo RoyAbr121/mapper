@@ -39,8 +39,8 @@ public class FieldsController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getField(@PathVariable Long id) {
-        Optional<Field> field = fieldService.findById(id);
-        System.out.println(field.get().toEncodedUrlQuery());
+        Optional<Field> dbField = fieldService.findById(id);
+        if (dbField.isEmpty()) throw new RuntimeException("Field with the ID: " + id + " was not found");
         return new ResponseEntity<>(fieldService.findById(id), HttpStatus.OK);
     }
 
