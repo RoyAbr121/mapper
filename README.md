@@ -14,3 +14,16 @@ An application written using Spring Boot which implements a REST API in order to
 **Containerization**: Docker
 
 **Miscellaneous**: Hibernate
+
+
+## How to Run Locally 
+
+Clone the project:
+```
+got clone git@https://github.com/RoyAbr121/mapper.git
+```
+
+Enter the project folder. Start the PostgresSQL container using Docker Compose:
+```
+docker compose up -d
+```
