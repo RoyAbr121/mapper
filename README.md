@@ -1,4 +1,4 @@
-# Wheat Field Mapper 
+# Wheat Fields Mapper 
 
 An application written using Spring Boot which implements a REST API in order to search for the geographic data of wheat field worldwide - through the use of web scraping - and  present them on a map using a third-party API.
 
@@ -29,5 +29,5 @@ docker compose up -d
 ```
 Run the project on your IDE. Use the Swagger UI in order to run the REST API calls:
 ```
-http://localhost:8080/swagger-ui.html# 
+[http://localhost:8080/swagger-ui.html#] 
 ```
