@@ -32,7 +32,6 @@ public class OpenStreetMapService {
 
             fields.add(new Field(new Polygon(points)));
         }
-
         return fields;
     }
 
@@ -45,7 +44,6 @@ public class OpenStreetMapService {
             Double longitude = Double.parseDouble(matcher.group(2));
             point = new Point(longitude, latitude);
         }
-
         return point;
     }
 
@@ -84,7 +82,6 @@ public class OpenStreetMapService {
         while (matcher.find()) {
             results.add("https://www.openstreetmap.org" + matcher.group(1));
         }
-
         return results;
     }
 
@@ -123,22 +120,21 @@ public class OpenStreetMapService {
         while (matcher.find()) {
             results.add("https://www.openstreetmap.org" + matcher.group(1));
         }
-
         return results;
     }
 
     private static String getSearchResultsHtml() throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded; charset=UTF-8");
-        RequestBody body = RequestBody.create(mediaType, "zoom=19&minlon=81.34026288986207&minlat=28.20469414833093&maxlon=81.34169518947603&maxlat=28.205644366062966&authenticity_token=aoRfRQKg3-hfyPFl6uEELUwUY6h5o4UA6HyyU5LVc1aPVogmwZl7waua8uW1gbVPYkDNvnPSDkT9MSvguQ69pg");
+        RequestBody body = RequestBody.create(mediaType, "zoom=14&minlon=-80.5774211883545&minlat=39.6263832270382&maxlon=-80.52223205566406&maxlat=39.65275548355981&authenticity_token=HMj9FqLKIhpBkAhIp_dJaGfMGjDIGvgU3ocwjEutxKOe_ULUzbAUeNN1yDJgVGtFFoVI5P0wu-eP6B2hlfSZrg");
         Request request = new Request.Builder()
                 .url("https://www.openstreetmap.org/geocoder/search_osm_nominatim?query=wheat")
                 .method("POST", body)
                 .addHeader("authority", "www.openstreetmap.org")
                 .addHeader("accept", "*/*")
-                .addHeader("accept-language", "en-US,en;q=0.6")
+                .addHeader("accept-language", "en-US,en;q=0.7")
                 .addHeader("content-type", "application/x-www-form-urlencoded; charset=UTF-8")
-                .addHeader("cookie", "_pk_id.1.cf09=7ebff3d5aa0aec89.1680438232.; _osm_session=867c6e30ef91877f81b0c9007730d61b; _osm_totp_token=796322; _pk_ses.1.cf09=1; _osm_location=81.34098|28.20517|19|M")
+                .addHeader("cookie", "_pk_id.1.cf09=198a17343da5fde5.1682864204.; _osm_session=77a5fa70c62a2956d46ec812cfe64bf1; _osm_totp_token=511138; _pk_ses.1.cf09=1; _osm_location=-80.5498|39.6396|14|M")
                 .addHeader("origin", "https://www.openstreetmap.org")
                 .addHeader("referer", "https://www.openstreetmap.org/search?query=wheat")
                 .addHeader("sec-ch-ua", "\"Chromium\";v=\"112\", \"Brave\";v=\"112\", \"Not:A-Brand\";v=\"99\"")
@@ -149,7 +145,7 @@ public class OpenStreetMapService {
                 .addHeader("sec-fetch-site", "same-origin")
                 .addHeader("sec-gpc", "1")
                 .addHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36")
-                .addHeader("x-csrf-token", "aoRfRQKg3-hfyPFl6uEELUwUY6h5o4UA6HyyU5LVc1aPVogmwZl7waua8uW1gbVPYkDNvnPSDkT9MSvguQ69pg")
+                .addHeader("x-csrf-token", "HMj9FqLKIhpBkAhIp_dJaGfMGjDIGvgU3ocwjEutxKOe_ULUzbAUeNN1yDJgVGtFFoVI5P0wu-eP6B2hlfSZrg")
                 .addHeader("x-requested-with", "XMLHttpRequest")
                 .build();
         Response response = client.newCall(request).execute();
