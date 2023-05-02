@@ -28,4 +28,5 @@ Enter the project folder. Start the PostgresSQL container using Docker Compose:
 docker compose up -d
 ```
 Run the project on your IDE. Use the Swagger UI in order to run the REST API calls:
-[http://localhost:8080/swagger-ui.html#] 
+
+[](http://localhost:8080/swagger-ui.html#) 
