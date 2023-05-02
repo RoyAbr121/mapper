@@ -13,7 +13,7 @@ An application written using Spring Boot which implements a REST API in order to
 
 **Containerization**: Docker
 
-**Miscellaneous**: Hibernate
+**Miscellaneous**: Hibernate, Swagger
 
 
 ## How to Run Locally 
