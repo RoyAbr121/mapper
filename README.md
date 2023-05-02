@@ -7,7 +7,10 @@ An application written using Spring Boot which implements a REST API in order to
 
 ## Technologies
 
-Backend: Spring Boot
-Database: PostgreSQL
-Containerization: Docker
-Miscellaneous: Hibernate
+**Backend**: Spring Boot
+
+**Database**: PostgreSQL
+
+**Containerization**: Docker
+
+**Miscellaneous**: Hibernate
